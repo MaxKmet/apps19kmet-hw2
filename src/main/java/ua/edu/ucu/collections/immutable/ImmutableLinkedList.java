@@ -102,7 +102,7 @@ public class ImmutableLinkedList {
     }
 
 
-    Object get(int index) {
+    public Object get(int index) {
         return getNode(index).value;
     }
 
