@@ -2,17 +2,12 @@ package ua.edu.ucu.collections.immutable;
 
 
 import java.util.Arrays;
-import java.lang.System;
 
-public class ImmutableArrayList implements ImmutableList{
+public class ImmutableArrayList implements ImmutableList {
 
     private int size;
     private int capacity;
     private Object[] array;
-
-    public int getSize() {
-        return size;
-    }
 
     public ImmutableArrayList(int cap) {
         size = 0;
@@ -42,19 +37,19 @@ public class ImmutableArrayList implements ImmutableList{
         return extendedArrayList;
     }
 
-    private boolean enoughSpaceFor(int numExtra){
+    private boolean enoughSpaceFor(int numExtra) {
         return this.size + numExtra <= this.capacity;
     }
 
     @Override
-    public ImmutableArrayList add(Object e){
+    public ImmutableArrayList add(Object e) {
 
         return add(this.size, e);
 
     }
 
     @Override
-    public ImmutableArrayList add(int index, Object e){
+    public ImmutableArrayList add(int index, Object e) {
         ImmutableArrayList newArrayList;
         if (index > size || index < 0) {
             throw new IndexOutOfBoundsException();
@@ -65,34 +60,32 @@ public class ImmutableArrayList implements ImmutableList{
     }
 
     @Override
-    public ImmutableArrayList addAll(Object[] c){
-        return addAll(size , c);
+    public ImmutableArrayList addAll(Object[] c) {
+        return addAll(size, c);
     }
 
     @Override
-    public ImmutableArrayList addAll(int index, Object[] c){
+    public ImmutableArrayList addAll(int index, Object[] c) {
         if (index > size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
         ImmutableArrayList newArrayList;
-        if (enoughSpaceFor(c.length)){
+        if (enoughSpaceFor(c.length)) {
             newArrayList = getExtendedCopy();
-        }
-        else{
+        } else {
             newArrayList = getCopy();
         }
-        while(!newArrayList.enoughSpaceFor(c.length)){
+        while (!newArrayList.enoughSpaceFor(c.length)) {
             newArrayList = newArrayList.getExtendedCopy();
         }
 
         int i = 0;
-        while(i < c.length + size ){
-            if(i < index){
+        while (i < c.length + size) {
+            if (i < index) {
                 newArrayList.array[i] = array[i];
-            } else if( i < index + c.length){// +1
+            } else if (i < index + c.length) {// +1
                 newArrayList.array[i] = c[i - index];
-            }
-            else {
+            } else {
                 newArrayList.array[i] = array[i - c.length];
             }
             i++;
@@ -112,16 +105,15 @@ public class ImmutableArrayList implements ImmutableList{
     }
 
     @Override
-    public ImmutableArrayList remove(int index){
+    public ImmutableArrayList remove(int index) {
         if (index > size - 1 || index < 0) {
             throw new IndexOutOfBoundsException();
         }
         ImmutableArrayList newArrayList = new ImmutableArrayList(this.capacity);
-        for(int i = 0; i < size - 1; i++){
-            if(i < index){
+        for (int i = 0; i < size - 1; i++) {
+            if (i < index) {
                 newArrayList.array[i] = array[i];
-            }
-            else{
+            } else {
                 newArrayList.array[i] = array[i + 1];
             }
         }
@@ -129,7 +121,7 @@ public class ImmutableArrayList implements ImmutableList{
     }
 
     @Override
-    public ImmutableArrayList set(int index, Object e){
+    public ImmutableArrayList set(int index, Object e) {
         if (index > size - 1 || index < 0) {
             throw new IndexOutOfBoundsException();
         }
@@ -141,37 +133,41 @@ public class ImmutableArrayList implements ImmutableList{
     }
 
     @Override
-    public int indexOf(Object e){
-        for(int i = 0; i < size; i++){
-            if (array[i] == e){
+    public int indexOf(Object e) {
+        for (int i = 0; i < size; i++) {
+            if (array[i] == e) {
                 return i;
             }
         }
-        return  -1;
+        return -1;
     }
 
     @Override
-    public int size(){
+    public int size() {
+        return size;
+    }
+
+    public int getSize() {
         return size;
     }
 
     @Override
-    public ImmutableArrayList clear(){
+    public ImmutableArrayList clear() {
         return new ImmutableArrayList(1);
     }
 
     @Override
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
     @Override
-    public Object[] toArray(){
+    public Object[] toArray() {
         return array;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return Arrays.toString(toArray());
     }
 
